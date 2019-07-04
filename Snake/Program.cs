@@ -31,6 +31,7 @@ namespace Snake
             }
             catch (Exception)
             {
+                Console.Title = "Console Snake v 1.0.0 by snaulX";
                 Console.Write("Input width (min 5) and height (min 6) of field:");
                 w = int.Parse(Console.ReadLine());
                 h = int.Parse(Console.ReadLine());
@@ -49,7 +50,8 @@ namespace Snake
                 Thread createField = new Thread(new ThreadStart(CreateField));
                 Console.WriteLine("Loading... (Create field)");
                 createField.Start();
-                Console.WriteLine("Field is creating. Press any key to start");
+                Console.Title = "Console Snake v 1.0.0 by snaulX";
+                Console.WriteLine("Field was creating. Press any key to start");
                 Console.ReadKey();
                 bool game = true;
                 Thread main = new Thread(new ThreadStart(RefreshField));
@@ -70,6 +72,7 @@ namespace Snake
 
         static void CreateField()
         {
+            Console.Title = "Field is creating";
             start:
             Random random = new Random();
             food_place = new Point(random.Next(w - 2), random.Next(h - 2));
@@ -103,11 +106,13 @@ namespace Snake
                 }
                 Console.WriteLine();
             }
+            Console.Title = $"Console Snake v 1.0.0 by snaulX. Your score = {score}";
             Thread.Sleep(1000 / fps);
         }
 
         static void GameOver()
         {
+            Console.Title = $"Game over. Your score = {score}";
             Console.WriteLine("GAME OVER!!!");
             Console.WriteLine($"Your score is: {score}");
             Console.Write("If you want to save results write your name and enter. Else write no and enter.");
