@@ -17,10 +17,10 @@ namespace Snake
         public Snake(List<Point> points, MoveVector vector)
         {
             body = points;
-            vectors = new List<MoveVector>(3);
+            vectors = new List<MoveVector>();
             for (int i = 0; i < 3; i++)
             {
-                vectors[i] = vector;
+                vectors.Add(vector);
             }
         }
 
