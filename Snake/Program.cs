@@ -46,10 +46,11 @@ namespace Snake
                 }, 
                 MoveVector.BOTTOM); //create snake and place by center
                 Random random = new Random();
-                food_place = new Point(random.Next(w - 2), random.Next(h - 2));
+                food_place = new Point(random.Next(w - 2), random.Next(h - 2)); //generate place of food
                 Thread createField = new Thread(new ThreadStart(CreateField));
                 Console.WriteLine("Loading... (Create field)");
                 createField.Start();
+                createField.Join();
                 Console.Title = "Console Snake v 1.0.0 by snaulX";
                 Console.WriteLine("Field was creating. Press any key to start");
                 Console.ReadKey();
@@ -102,10 +103,10 @@ namespace Snake
             {
                 for (int j = 0; j < w; j++)
                 {
-                    Console.WriteLine(field[j, i]);
+                    Console.Write(field[j, i]);
                 }
                 Console.WriteLine();
-            }
+            } //(re)draw field
             Console.Title = $"Console Snake v 1.0.0 by snaulX. Your score = {score}";
             Thread.Sleep(1000 / fps);
         }
