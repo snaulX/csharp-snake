@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 
 namespace Snake
@@ -49,9 +50,9 @@ namespace Snake
                 food_place = new Point(random.Next(w - 2), random.Next(h - 2)); //generate place of food
                 Thread createField = new Thread(new ThreadStart(CreateField));
                 Console.WriteLine("Loading... (Create field)");
-                createField.Start();
-                createField.Join();
-                Console.Title = "Console Snake v 1.0.0 by snaulX";
+                createField.Start(); //create field
+                createField.Join(); //wait when field creating
+                Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX";
                 Console.WriteLine("Field was creating. Press any key to start");
                 Console.ReadKey();
                 bool game = true;
@@ -129,7 +130,7 @@ namespace Snake
                 using (TextWriter writer = new StreamWriter(new FileInfo("../../../results.txt").OpenWrite()))
                 {
                     writer.WriteLine(name + " score = " + score + " date of game = " + DateTime.Now + " fps = " + fps + " width = "
-                        + w + " height = " + h);
+                        + w + " height = " + h); //write score to results.txt
                 }
             }
         }
