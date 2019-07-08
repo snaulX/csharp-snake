@@ -56,15 +56,16 @@ namespace Snake
                 Console.ReadKey();
                 bool game = true;
                 Thread main = new Thread(new ThreadStart(RefreshField));
-                while (game)
+                main.Start();
+
+                while (game) //main cycle
                 {
-                    main.Start();
                     ConsoleKey key = Console.ReadKey().Key;
-                    if (key == ConsoleKey.UpArrow) vector = MoveVector.TOP;
-                    else if (key == ConsoleKey.DownArrow) vector = MoveVector.BOTTOM;
-                    else if (key == ConsoleKey.RightArrow) vector = MoveVector.RIGHT;
-                    else if (key == ConsoleKey.LeftArrow) vector = MoveVector.LEFT;
-                    else if (key == ConsoleKey.Enter) game = false;
+                    if (key == ConsoleKey.UpArrow) vector = MoveVector.TOP; //change vector of move to top
+                    else if (key == ConsoleKey.DownArrow) vector = MoveVector.BOTTOM; //change vector of move to bottom
+                    else if (key == ConsoleKey.RightArrow) vector = MoveVector.RIGHT; //change vector of move to right
+                    else if (key == ConsoleKey.LeftArrow) vector = MoveVector.LEFT; //change vector of move to left
+                    else if (key == ConsoleKey.Enter) game = false; //break the game
                 }
                 
                 GameOver();
@@ -113,12 +114,13 @@ namespace Snake
 
         static void GameOver()
         {
-            Console.Title = $"Game over. Your score = {score}";
+            Console.Clear();
+            Console.Title = $"Game over. Your score = {score}"; //change title of console
             Console.WriteLine("GAME OVER!!!");
             Console.WriteLine($"Your score is: {score}");
             Console.Write("If you want to save results write your name and enter. Else write no and enter.");
             string name = Console.ReadLine();
-            if (name.ToLower() == "no")
+            if (name.Trim().ToLower() == "no" || name.Trim().Length == 0)
             {
                 Environment.Exit(0);
             }
