@@ -109,7 +109,7 @@ namespace Snake
                 }
                 Console.WriteLine();
             } //(re)draw field
-            Console.Title = $"Console Snake v 1.0.0 by snaulX. Your score = {score}";
+            Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX. Your score = {score}";
             Thread.Sleep(1000 / fps);
         }
 
