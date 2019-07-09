@@ -1,0 +1,8 @@
+language: csharp
+solution: Snake.sln
+
+matrix:
+  include:
+      mono: none
+      env: DOTNETCORE=1.1  # optional, can be used to take different code paths in your script
+    - mono: latest
