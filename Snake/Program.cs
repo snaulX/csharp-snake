@@ -92,25 +92,29 @@ namespace Snake
 
         static void RefreshField()
         {
-            start:
             if (snake.has(food_place))
             {
                 score++;
-                Random random = new Random();
-                food_place = new Point(random.Next(w - 2), random.Next(h - 2));
-                goto start;
+                while (snake.has(food_place))
+                {
+                    Random random = new Random();
+                    food_place = new Point(random.Next(w - 2), random.Next(h - 2));
+                } //check that any snake body element on place of food (sry for my English)
             }
             Console.Clear();
             for (int i = 0; i < h; i++)
             {
                 for (int j = 0; j < w; j++)
                 {
-                    Console.Write(field[j, i]);
+                    if (new Point(j, i) == food_place) Console.Write('&'); //draw food
+                    else if (snake.has(new Point(j, i))) Console.Write('@'); //draw snake
+                    else Console.Write(field[j, i]); //draw default
                 }
                 Console.WriteLine();
             } //(re)draw field
-            Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX. Your score = {score}";
-            Thread.Sleep(1000 / fps);
+            Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX. Your score = {score}"; //refresh title
+            snake.Move(vector); //snake move
+            Thread.Sleep(1000 / fps); //pause after frame
         }
 
         static void GameOver()
@@ -119,11 +123,12 @@ namespace Snake
             Console.Title = $"Game over. Your score = {score}"; //change title of console
             Console.WriteLine("GAME OVER!!!");
             Console.WriteLine($"Your score is: {score}");
-            Console.Write("If you want to save results write your name and enter. Else write no and enter.");
-            string name = Console.ReadLine();
+            Console.Write("If you want to save results write your name and enter. Else write no and enter."); //write message
+            string name = Console.ReadLine(); //get name
+            Console.Clear();
             if (name.Trim().ToLower() == "no" || name.Trim().Length == 0)
             {
-                Environment.Exit(0);
+                Environment.Exit(0); //just exit
             }
             else
             {
