@@ -56,8 +56,8 @@ namespace Snake
                 Console.WriteLine("Field was creating. Press any key to start");
                 Console.ReadKey();
                 bool game = true;
-                Thread main = new Thread(new ThreadStart(RefreshField));
-                main.Start();
+                TimerCallback tm = new TimerCallback(RefreshField); //make thread with refresh field
+                Timer timer = new Timer(tm, null, 0, 1000/fps); //make Timer
 
                 while (game) //main cycle
                 {
@@ -68,7 +68,8 @@ namespace Snake
                     else if (key == ConsoleKey.LeftArrow) vector = MoveVector.LEFT; //change vector of move to left
                     else if (key == ConsoleKey.Enter) game = false; //break the game
                 }
-                
+
+                timer.Change(Timeout.Infinite, 1000 / fps); //stop refresh field
                 GameOver();
             }
         }
@@ -90,7 +91,7 @@ namespace Snake
             }
         }
 
-        static void RefreshField()
+        static void RefreshField(object x)
         {
             if (snake.has(food_place))
             {
@@ -114,7 +115,6 @@ namespace Snake
             } //(re)draw field
             Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX. Your score = {score}"; //refresh title
             snake.Move(vector); //snake move
-            Thread.Sleep(1000 / fps); //pause after frame
         }
 
         static void GameOver()
