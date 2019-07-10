@@ -67,6 +67,7 @@ namespace Snake
             }
             catch (ArgumentOutOfRangeException)
             {
+                //there are bug
                 return;
             }
         }

@@ -58,6 +58,7 @@ namespace Snake
                 bool game = true;
                 TimerCallback tm = new TimerCallback(RefreshField); //make thread with refresh field
                 Timer timer = new Timer(tm, null, 0, 1000/fps); //make Timer
+                Console.CursorVisible = false; //off cursor
 
                 while (game) //main cycle
                 {
@@ -70,6 +71,7 @@ namespace Snake
                 }
 
                 timer.Change(Timeout.Infinite, 1000 / fps); //stop refresh field
+                Console.CursorVisible = true; //on cursor
                 GameOver();
             }
         }
