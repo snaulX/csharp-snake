@@ -19,10 +19,10 @@ namespace Snake
             switch (vector)
             {
                 case MoveVector.BOTTOM:
-                    y--;
+                    y++;
                     break;
                 case MoveVector.TOP:
-                    y++;
+                    y--;
                     break;
                 case MoveVector.LEFT:
                     x--;
@@ -34,6 +34,8 @@ namespace Snake
         }
 
         public static bool operator ==(Point left, Point right) => (left.x == right.x) && (left.y == right.y);
-        public static bool operator !=(Point left, Point right) => !(right == left);
+        public static bool operator !=(Point left, Point right) => !(right == left); //logic vne the magic))
+        public static bool operator <(Point left, Point right) => (left.x < right.x) && (left.y < right.y); //lite operator
+        public static bool operator >(Point left, Point right) => (left.x > right.x) && (left.y > right.y); //lite operator
     }
 }

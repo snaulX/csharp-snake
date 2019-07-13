@@ -17,7 +17,7 @@ namespace Snake
 
         public Snake()
         {
-            body = new List<Point>(3);
+            body = new List<Point>();
         }
 
         public Snake(List<Point> points, MoveVector vector)
@@ -44,10 +44,10 @@ namespace Snake
             return false;
         }
 
-        public void Add(Point point)
+        public void Add(Point point, MoveVector vector)
         {
             body.Add(point); //add point to snake
-            vectors.Add(vectors[body.Count - 1]); //add vector of last point to snake
+            vectors.Add(vector); //add vector of added point
         }
 
         /// <summary>
@@ -58,18 +58,29 @@ namespace Snake
         {
             try
             {
-                for (int i = vectors.Count; i > 0; i--)
+                for (int i = vectors.Count - 1; i > 0; i--)
                 {
-                    body[i].Move(vectors[i]);
+                    body[i].Move(vectors[i - 1]);
                     vectors[i] = vectors[i - 1];
                 }
+                body[0].Move(vector);
                 vectors[0] = vector;
             }
             catch (ArgumentOutOfRangeException)
             {
-                //there are bug
                 return;
             }
+        }
+
+        /// <summary>
+        /// Check over snake from field with this coordinates
+        /// </summary>
+        /// <param name="w">Width of field</param>
+        /// <param name="h">Height of field</param>
+        /// <returns></returns>
+        public bool Over(int w, int h)
+        {
+            return false;
         }
     }
 }

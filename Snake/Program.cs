@@ -8,6 +8,7 @@ namespace Snake
 {
     static class Program
     {
+        static bool game;
         static char[,] field;
         static int w, h, score = 0, fps;
         static Snake snake;
@@ -32,13 +33,14 @@ namespace Snake
             }
             catch (Exception)
             {
-                Console.Title = "Console Snake v 1.0.0 by snaulX";
+                Console.Clear(); //clear console before game
+                Console.Title = "Console Snake v 1.0.0 by snaulX"; //set title
                 Console.Write("Input width (min 5) and height (min 6) of field:");
-                w = int.Parse(Console.ReadLine());
-                h = int.Parse(Console.ReadLine());
-                field = new char[w, h];
+                w = int.Parse(Console.ReadLine()); //set width
+                h = int.Parse(Console.ReadLine()); //set height
+                field = new char[w, h]; //create empty field
                 Console.Write("Input FPS:");
-                fps = int.Parse(Console.ReadLine());
+                fps = int.Parse(Console.ReadLine()); //set fps (frames per second)
                 snake = new Snake(new List<Point>
                 {
                     new Point(w/2, h/2+1),
@@ -55,7 +57,7 @@ namespace Snake
                 Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX";
                 Console.WriteLine("Field was creating. Press any key to start");
                 Console.ReadKey();
-                bool game = true;
+                game = true;
                 TimerCallback tm = new TimerCallback(RefreshField); //make thread with refresh field
                 Timer timer = new Timer(tm, null, 0, 1000/fps); //make Timer
                 Console.CursorVisible = false; //off cursor
@@ -95,9 +97,16 @@ namespace Snake
 
         static void RefreshField(object x)
         {
+            if (snake.Over(w, h))
+            {
+                game = false; //change continue of game to false
+                return;
+            }
             if (snake.has(food_place))
             {
                 score++;
+                Point point = snake.body[snake.body.Count - 1];
+                snake.Add(point, snake.vectors[snake.vectors.Count - 1]);
                 while (snake.has(food_place))
                 {
                     Random random = new Random();
