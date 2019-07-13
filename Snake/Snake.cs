@@ -80,6 +80,10 @@ namespace Snake
         /// <returns></returns>
         public bool Over(int w, int h)
         {
+            foreach (Point point in body)
+            {
+                if ((point.x > w) || (point.x < 0) || (point.y < 0) || (point.y > h)) return true;
+            }
             return false;
         }
     }

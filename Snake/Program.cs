@@ -49,7 +49,7 @@ namespace Snake
                 }, 
                 MoveVector.BOTTOM); //create snake and place by center
                 Random random = new Random();
-                food_place = new Point(random.Next(w - 2), random.Next(h - 2)); //generate place of food
+                food_place = new Point(random.Next(w - 2) + 1, random.Next(h - 2) + 1); //generate place of food
                 Thread createField = new Thread(new ThreadStart(CreateField));
                 Console.WriteLine("Loading... (Create field)");
                 createField.Start(); //create field
@@ -110,7 +110,7 @@ namespace Snake
                 while (snake.has(food_place))
                 {
                     Random random = new Random();
-                    food_place = new Point(random.Next(w - 2), random.Next(h - 2));
+                    food_place = new Point(random.Next(w - 2) + 1, random.Next(h - 2) + 1);
                 } //check that any snake body element on place of food (sry for my English)
             }
             Console.Clear();
