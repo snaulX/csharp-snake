@@ -19,8 +19,8 @@ namespace Snake
             try
             {
                 if (args[0] == "results")
-                {
-                    using (TextReader reader = new StreamReader(new FileInfo("../../../results.txt").OpenRead()))
+                {                    
+                    using (TextReader reader = new StreamReader(new FileInfo("Resources/Results.txt").OpenRead()))
                     {
                         Console.Write(reader.ReadToEnd());
                     }
@@ -35,11 +35,11 @@ namespace Snake
             {
                 Console.Clear(); //clear console before game
                 Console.Title = "Console Snake v 1.0.0 by snaulX"; //set title
-                Console.Write("Input width (min 5) and height (min 6) of field:");
+                Console.Write("Input width (min 5, norm 35, very big 50) and height (min 6, norm 15, very big 30) of field:");
                 w = int.Parse(Console.ReadLine()); //set width
                 h = int.Parse(Console.ReadLine()); //set height
                 field = new char[w, h]; //create empty field
-                Console.Write("Input FPS:");
+                Console.Write("Input FPS (easy 4, medium 6, hard 9 (for 35x15)):");
                 fps = int.Parse(Console.ReadLine()); //set fps (frames per second)
                 snake = new Snake(new List<Point>
                 {
@@ -49,7 +49,7 @@ namespace Snake
                 }, 
                 MoveVector.BOTTOM); //create snake and place by center
                 Random random = new Random();
-                food_place = new Point(random.Next(w - 2) + 1, random.Next(h - 2) + 1); //generate place of food
+                food_place = new Point(random.Next(1, w - 2), random.Next(1, h - 2)); //generate place of food
                 Thread createField = new Thread(new ThreadStart(CreateField));
                 Console.WriteLine("Loading... (Create field)");
                 createField.Start(); //create field
@@ -83,7 +83,7 @@ namespace Snake
             Console.Title = "Field is creating";
             start:
             Random random = new Random();
-            food_place = new Point(random.Next(w - 2), random.Next(h - 2));
+            food_place = new Point(random.Next(1, w - 2), random.Next(1, h - 2));
             if (snake.has(food_place)) goto start;
             for (int i = 0; i < h; i++)
             {
@@ -106,11 +106,26 @@ namespace Snake
             {
                 score++;
                 Point point = snake.body[snake.body.Count - 1];
-                snake.Add(point, snake.vectors[snake.vectors.Count - 1]);
+                switch (snake.vectors[snake.vectors.Count - 1])
+                {
+                    case MoveVector.BOTTOM:
+                        point.y--;
+                        break;
+                    case MoveVector.LEFT:
+                        point.x++;
+                        break;
+                    case MoveVector.RIGHT:
+                        point.x--;
+                        break;
+                    case MoveVector.TOP:
+                        point.y++;
+                        break;
+                }
+                snake.Add(point, snake.vectors[snake.vectors.Count - 1]); //there are bug
                 while (snake.has(food_place))
                 {
                     Random random = new Random();
-                    food_place = new Point(random.Next(w - 2) + 1, random.Next(h - 2) + 1);
+                    food_place = new Point(random.Next(1, w - 2), random.Next(1, h - 2));
                 } //check that any snake body element on place of food (sry for my English)
             }
             Console.Clear();
@@ -143,7 +158,7 @@ namespace Snake
             }
             else
             {
-                using (TextWriter writer = new StreamWriter(new FileInfo("../../../results.txt").OpenWrite()))
+                using (TextWriter writer = new StreamWriter(new FileInfo("/Resources/Results.txt").OpenWrite()))
                 {
                     writer.WriteLine(name + " score = " + score + " date of game = " + DateTime.Now + " fps = " + fps + " width = "
                         + w + " height = " + h); //write score to results.txt
