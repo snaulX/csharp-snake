@@ -35,7 +35,5 @@ namespace Snake
 
         public static bool operator ==(Point left, Point right) => (left.x == right.x) && (left.y == right.y);
         public static bool operator !=(Point left, Point right) => !(right == left); //logic vne the magic))
-        public static bool operator <(Point left, Point right) => (left.x < right.x) && (left.y < right.y); //lite operator
-        public static bool operator >(Point left, Point right) => (left.x > right.x) && (left.y > right.y); //lite operator
     }
 }
