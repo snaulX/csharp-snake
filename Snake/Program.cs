@@ -39,7 +39,7 @@ namespace Snake
             catch (Exception)
             {
                 Console.Clear(); //clear console before game
-                Console.Title = "Console Snake v 1.0.0 by snaulX"; //set title
+                Console.Title = $"Console Snake v {Assembly.GetEntryAssembly().GetName().Version} by snaulX"; //set title
                 input:
                 Console.Write("Input width (min 5, norm 35, very big 50) and height (min 6, norm 15, very big 30) of field:");
                 try
