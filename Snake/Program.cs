@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -25,6 +26,10 @@ namespace Snake
                         Console.Write(reader.ReadToEnd());
                     }
                     return;
+                }
+                else if (args[0] == "help")
+                {
+                    Process.Start("help.cmd");
                 }
                 else
                 {
