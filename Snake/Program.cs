@@ -40,12 +40,21 @@ namespace Snake
             {
                 Console.Clear(); //clear console before game
                 Console.Title = "Console Snake v 1.0.0 by snaulX"; //set title
+                input:
                 Console.Write("Input width (min 5, norm 35, very big 50) and height (min 6, norm 15, very big 30) of field:");
-                w = int.Parse(Console.ReadLine()); //set width
-                h = int.Parse(Console.ReadLine()); //set height
-                field = new char[w, h]; //create empty field
-                Console.Write("Input FPS (easy 4, medium 6, hard 9 (for 35x15)):");
-                fps = int.Parse(Console.ReadLine()); //set fps (frames per second)
+                try
+                {
+                    w = int.Parse(Console.ReadLine()); //set width
+                    h = int.Parse(Console.ReadLine()); //set height
+                    field = new char[w, h]; //create empty field
+                    Console.Write("Input FPS (easy 4, medium 6, hard 9 (for 35x15)):");
+                    fps = int.Parse(Console.ReadLine()); //set fps (frames per second)
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Non-right input. Please input again.");
+                    goto input;
+                }
                 snake = new Snake(new List<Point>
                 {
                     new Point(w/2, h/2+1),
