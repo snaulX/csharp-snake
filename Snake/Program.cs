@@ -27,7 +27,7 @@ namespace Snake
                     }
                     return;
                 }
-                else if (args[0] == "help")
+                else if (args[0] == "help" || args[0] == "-help" || args[0] == "--help")
                 {
                     Process.Start("help.cmd");
                 }
